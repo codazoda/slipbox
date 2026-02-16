@@ -1,0 +1,16 @@
+{
+  "name": "slipbox",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Slipbox: minimal second-brain app with flat text files",
+  "main": "server.js",
+  "bin": {
+    "slipbox": "server.js"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

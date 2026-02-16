@@ -1,0 +1,42 @@
+#searchPane {
+  display: block;
+  padding: 0;
+  width: 100%;
+  height: calc(100% - 20px);
+  border: 0;
+  overflow: auto;
+  font-family: monospace;
+  font-size: 16px;
+  color: #444;
+}
+
+input[name="search"] {
+  width: 100%;
+  font-family: monospace;
+  font-size: 16px;
+  padding: 8px 10px;
+  border: 0;
+  margin-bottom: 12px;
+}
+
+input[name="search"]:focus {
+  outline: none;
+}
+
+#results {
+  padding: 10px;
+}
+
+#results p {
+  margin: 0 0 12px 0;
+}
+
+#results a {
+  color: #444;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#results a:hover {
+  text-decoration: underline;
+}
