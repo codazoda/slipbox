@@ -193,7 +193,7 @@ function renderEditor(docName, text, prevName, nextName, pluginScriptsHtml = '')
 
   return `<!DOCTYPE html>
 <head>
-  <title>Slipbox</title>
+  <title>${escapeHtml(firstLineTitle(text))} - Slipbox</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
