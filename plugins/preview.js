@@ -74,7 +74,7 @@
     }
 
     if (menuAnchor) {
-      menuAnchor.textContent = enabled ? 'Edit' : 'Preview';
+      menuAnchor.textContent = enabled ? 'Exit Preview' : 'Enter Preview';
     }
   }
 
@@ -83,14 +83,15 @@
   });
 
   let menuAnchor = null;
-  slipbox.addMenu('Preview', function () {
+  const enterLabel = 'Enter Preview';
+  slipbox.addMenu(enterLabel, function () {
     setPreviewMode(!inPreview);
   });
 
   const menuItems = document.getElementById('pluginMenuItems');
   if (menuItems) {
     const lastLi = menuItems.querySelector('li:last-child a');
-    if (lastLi && lastLi.textContent === 'Preview') {
+    if (lastLi && lastLi.textContent === enterLabel) {
       menuAnchor = lastLi;
     }
   }
