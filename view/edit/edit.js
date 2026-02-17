@@ -50,3 +50,12 @@ document.body.addEventListener('htmx:sendError', (event) => {
   if (elt !== typebox) return;
   warnSaveFailed('Save failed (network error). Check your connection and try again.');
 });
+
+// Ignore manual save shortcuts; saving is automatic.
+document.addEventListener('keydown', (event) => {
+  const isSaveCombo = (event.ctrlKey || event.metaKey) && !event.shiftKey && !event.altKey && (event.key === 's' || event.key === 'S');
+  if (!isSaveCombo) return;
+
+  event.preventDefault();
+  if (typeof event.stopPropagation === 'function') event.stopPropagation();
+});
