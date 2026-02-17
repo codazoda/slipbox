@@ -48,8 +48,7 @@ function parseBasicAuth(req) {
 
 async function loadUsers() {
   const iniPath = path.join(ROOT, 'users.ini');
-  const txtPath = path.join(ROOT, 'users.txt');
-  const file = fs.existsSync(iniPath) ? iniPath : (fs.existsSync(txtPath) ? txtPath : null);
+  const file = fs.existsSync(iniPath) ? iniPath : null;
   if (!file) return { admin: 'admin' };
 
   const raw = await fsp.readFile(file, 'utf8');
@@ -403,5 +402,5 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`Slipbox running on http://localhost:${PORT}`);
   console.log(`Data directory: ${DATA_DIR}`);
-  console.log('Default auth: admin/admin (create users.txt to change)');
+  console.log('Default auth: admin/admin (create users.ini to change)');
 });

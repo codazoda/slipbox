@@ -21,9 +21,8 @@ Default login:
 - username: `admin`
 - password: `admin`
 
-To set your own credentials, create one of these files in the project root:
+To set your own credentials, create this file in the project root:
 - `users.ini`
-- `users.txt`
 
 Format:
 
