@@ -1,110 +1,188 @@
+@font-face {
+    font-family: 'Atkinson Hyperlegible Mono';
+    src: url('/media/fonts/AtkinsonHyperlegibleMono-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible Mono';
+    src: url('/media/fonts/AtkinsonHyperlegibleMono-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
 * {
     box-sizing: border-box;
 }
+
+:root {
+    color-scheme: light dark;
+
+    --bg: #eeeeee;
+    --surface: #ffffff;
+    --surface-2: #eeeeee;
+    --text: #444444;
+    --title-text: #444444;
+    --muted: #9a9a9a;
+    --border: #c8c8c8;
+    --hover: #d6d6d6;
+    --menu-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #111111;
+        --surface: #1a1a1a;
+        --surface-2: #161616;
+        --text: #b8b8b8;
+        --title-text: #f2f2f2;
+        --muted: #7f7f7f;
+        --border: #333333;
+        --hover: #2a2a2a;
+        --menu-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
+    }
+}
+
 html, body {
     height: calc(100% - 20px);
 }
+
 body {
-    background-color: #EEE; 
+    background-color: var(--bg);
     margin: 0 20px 20px 20px;
-    padding: 0; 
-    font-family: monospace; 
-    font-size: 16px;
+    padding: 0;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 18px;
+    line-height: 1.6;
     overflow: hidden;
+    color: var(--text);
 }
+
 textarea {
     display: block;
     padding: 10px;
     width: 100%;
     height: calc(100% - 25px);
     outline: none;
-    border: 1px solid silver;
     border: 0;
-    background-color: white;
+    background-color: var(--surface);
     resize: none;
     overflow: auto;
-    font-family: monospace;
-    font-size: 16px;
-    color: #444;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text);
 }
+
 button {
     height: 40px;
     width: 40px;
     margin-right: 20px;
     margin-bottom: 20px;
-    color: #444;
-    border: 1px solid #444;
+    color: var(--text);
+    border: 1px solid var(--text);
+    background: var(--surface);
 }
+
 hr {
     height: 1px;
     border: 0;
-    border-top: 1px solid silver;
+    border-top: 1px solid var(--border);
 }
+
 /* The Menu */
 #menu {
-    position: fixed; 
-    right: 20px; 
-    background-color: #eee; 
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: fixed;
+    right: 20px;
+    background-color: var(--surface-2);
+    box-shadow: var(--menu-shadow);
     display: none;
+    border: 1px solid var(--border);
 }
+
 #menu ul {
-    list-style-type: none; 
-    margin: 15px 0 15px 0; 
+    list-style-type: none;
+    margin: 15px 0 15px 0;
     padding: 0;
 }
+
 #menu li {
-    color: #444;
+    color: var(--text);
     padding: 5px 20px 5px 20px;
 }
+
 #menu li a {
     text-decoration: none;
-    color: #444;
+    color: var(--text);
 }
+
 #menu li:hover {
-    background-color: silver;
+    background-color: var(--hover);
 }
+
 /* The Title Line */
 #title {
     display: inline;
     font-size: 18px;
     display: block;
     margin: 10px 0 10px 0;
-    color: silver;
+    color: var(--muted);
     text-align: right;
     height: 24px;
     white-space: nowrap;
     overflow: hidden;
 }
+
 #title p {
     margin: 0 0;
 }
+
 #title a {
-    color: #444;
+    color: var(--text);
 }
+
 #title .material-icons {
-    color: #444;
+    color: var(--text);
 }
+
 #title #page {
     float: right;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 50%; /* Hack */
     margin-right: 10px;
+    color: var(--title-text);
 }
+
+#typebox,
+#previewbox {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+#previewbox {
+    max-width: none;
+}
+
 .material-icons {
     cursor: pointer;
 }
+
 /* Hack to align icons in most browsers */
 .material-icons {
     vertical-align: -7px;
 }
+
 /* Hack to align firefox icons */
 @-moz-document url-prefix(){
     .material-icons {
         vertical-align: -5px;
     }
 }
+
 /* desktop screens */
 @media only screen and (min-width: 800px) {
     ul {
