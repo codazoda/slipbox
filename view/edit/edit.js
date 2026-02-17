@@ -59,3 +59,23 @@ document.addEventListener('keydown', (event) => {
   event.preventDefault();
   if (typeof event.stopPropagation === 'function') event.stopPropagation();
 });
+
+// Make Tab insert four spaces in the editor.
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Tab') return;
+  if (event.target !== typebox) return;
+
+  event.preventDefault();
+
+  const start = typebox.selectionStart;
+  const end = typebox.selectionEnd;
+  const value = typebox.value;
+  const insert = '    ';
+
+  typebox.value = value.slice(0, start) + insert + value.slice(end);
+  const nextPos = start + insert.length;
+  typebox.setSelectionRange(nextPos, nextPos);
+
+  // Trigger autosave flow that listens to textarea input.
+  typebox.dispatchEvent(new Event('input', { bubbles: true }));
+});
