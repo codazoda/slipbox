@@ -209,11 +209,11 @@ function renderEditor(docName, text, prevName, nextName, pluginScriptsHtml = '')
 <body>
   <div id="title">
     <p id="nav" style="float: right;">
-      <a href="#" id="pluginsButton"><span class="material-icons" title="Menu">menu</span></a>
       <a href="/search"><span class="material-icons" title="Search">search</span></a>
       <a href="/doc/${encodeURIComponent(prevName.replace(/\.md$/i, ''))}"><span class="material-icons" title="Previous Document">navigate_before</span></a>
       <a href="/doc/${encodeURIComponent(nextName.replace(/\.md$/i, ''))}"><span class="material-icons" title="Next Document">navigate_next</span></a>
       <a href="/new"><span class="material-icons" title="Add New Document">add</span></a>
+      <a href="#" id="pluginsButton"><span class="material-icons" title="Menu">menu</span></a>
     </p>
     <p id="page">${escapeHtml(docName)}</p>
   </div>
