@@ -8,7 +8,7 @@ This is a todo list for Nolific.
 - ~~Add whitespace to navigation (mostly for mobile)~~ [addHeaderSpace - 03/03/2022]
 - ~~Deploy to nolific.com instead of locally~~ [03/12/2022]
 - ~~Don't run docker as root~~ [02/11/2022]
-- Warn the user when the save API call fails
+- ~~Warn the user when the save API call fails~~ [2026-02-16]
 - Save on paste (if you paste text in, it's not saved)
 - Add hamburger menu for extra stuff (logout, backup, help, etc)
 - Save "created" date on save if it doesn't already exist[1]
@@ -33,6 +33,15 @@ This is a todo list for Nolific.
 - Add an undo history and button (save to local storage?)
 - Daily automatic backups (maybe by weekday i.e. admin-mon.sqlite)
 - Remove first line of text from search results (it's in the title)
+
+## Answers (2026-02-16)
+
+- "Fix over-writing documents that have updated (somehow)"
+  - Use optimistic locking, not diff. Include a revision token (mtime or hash) with each save and reject if the server version changed.
+- "Add an undo history and button (save to local storage?)"
+  - Yes: localStorage is the right first step. Keep a capped per-document history (e.g., last 50 snapshots) with a simple Undo action.
+- "Daily automatic backups (maybe by weekday...)"
+  - Yes: weekday rotation is a good default (mon..sun files), optionally plus a weekly full backup.
 - ~If the title is empty change it to "Untitled"~
 - Add export button to export the sqlite file as md files
 - Add feature flags [addFeatureFlags]
