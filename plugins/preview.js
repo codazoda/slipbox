@@ -74,7 +74,7 @@
     }
 
     if (menuAnchor) {
-      menuAnchor.textContent = enabled ? 'Exit Preview' : 'Enter Preview';
+      menuAnchor.textContent = enabled ? 'Close Preview' : 'Show Preview';
     }
   }
 
@@ -83,7 +83,7 @@
   });
 
   let menuAnchor = null;
-  const enterLabel = 'Enter Preview';
+  const enterLabel = 'Show Preview';
   slipbox.addMenu(enterLabel, function () {
     setPreviewMode(!inPreview);
   });
