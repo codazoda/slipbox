@@ -224,7 +224,7 @@ function renderEditor(docName, text, prevName, nextName, pluginScriptsHtml = '')
   </div>
 
   <input type="hidden" name="doc" value="${escapeHtml(docName)}">
-  <textarea id="typebox" name="text" hx-post="/save" hx-trigger="keyup delay:500ms" hx-sync="this:replace" hx-include="[name='doc']">${escapeHtml(text)}</textarea>
+  <textarea id="typebox" name="text" hx-post="/save" hx-trigger="keyup delay:500ms, paste delay:75ms" hx-sync="this:replace" hx-include="[name='doc']">${escapeHtml(text)}</textarea>
 
   <script src="/view/edit/edit.js"></script>
   <script src="/view/edit/plugins.js"></script>
