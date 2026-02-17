@@ -4,6 +4,9 @@
   const textarea = document.getElementById('typebox');
   if (!textarea) return;
 
+  const parser = window.commonmark ? new window.commonmark.Parser() : null;
+  const renderer = window.commonmark ? new window.commonmark.HtmlRenderer({ safe: true }) : null;
+
   let inPreview = false;
   const preview = document.createElement('div');
   preview.id = 'previewbox';
@@ -31,79 +34,30 @@
       .replace(/'/g, '&#39;');
   }
 
-  function parseInline(text) {
-    let out = escapeHtml(text);
+  // Task-list support on top of CommonMark output.
+  function withTaskLists(html) {
+    const pWrapped = /<li><p>\s*\[( |x|X)\]\s*([\s\S]*?)<\/p><\/li>/g;
+    const plain = /<li>\s*\[( |x|X)\]\s*([\s\S]*?)<\/li>/g;
 
-    out = out.replace(/`([^`]+)`/g, '<code>$1</code>');
-    out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    out = out.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-    out = out.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    const replacer = (_, checked, text) => {
+      const isChecked = checked.toLowerCase() === 'x';
+      return `<li class="task-list-item"><label><input type="checkbox" disabled ${isChecked ? 'checked' : ''}> <span>${text}</span></label></li>`;
+    };
 
-    return out;
+    return html.replace(pWrapped, replacer).replace(plain, replacer);
   }
 
   function markdownToHtml(md) {
-    const lines = String(md || '').replace(/\r\n/g, '\n').split('\n');
-    const html = [];
-    let inCode = false;
-    let inUl = false;
+    const text = String(md || '');
 
-    function closeUl() {
-      if (inUl) {
-        html.push('</ul>');
-        inUl = false;
-      }
+    if (parser && renderer) {
+      const ast = parser.parse(text);
+      const raw = renderer.render(ast);
+      return withTaskLists(raw);
     }
 
-    for (const rawLine of lines) {
-      const line = rawLine || '';
-
-      if (line.trim().startsWith('```')) {
-        closeUl();
-        if (!inCode) {
-          html.push('<pre><code>');
-          inCode = true;
-        } else {
-          html.push('</code></pre>');
-          inCode = false;
-        }
-        continue;
-      }
-
-      if (inCode) {
-        html.push(`${escapeHtml(line)}\n`);
-        continue;
-      }
-
-      const h = line.match(/^(#{1,6})\s+(.+)$/);
-      if (h) {
-        closeUl();
-        const lvl = h[1].length;
-        html.push(`<h${lvl}>${parseInline(h[2])}</h${lvl}>`);
-        continue;
-      }
-
-      const li = line.match(/^\s*[-*]\s+(.+)$/);
-      if (li) {
-        if (!inUl) {
-          html.push('<ul>');
-          inUl = true;
-        }
-        html.push(`<li>${parseInline(li[1])}</li>`);
-        continue;
-      }
-
-      closeUl();
-      if (!line.trim()) {
-        html.push('');
-      } else {
-        html.push(`<p>${parseInline(line)}</p>`);
-      }
-    }
-
-    closeUl();
-    if (inCode) html.push('</code></pre>');
-    return html.join('\n');
+    // Fallback if commonmark is unavailable.
+    return `<pre>${escapeHtml(text)}</pre>`;
   }
 
   function setPreviewMode(enabled) {
@@ -133,7 +87,6 @@
     setPreviewMode(!inPreview);
   });
 
-  // Grab the newest plugin item so we can rename Preview <-> Edit.
   const menuItems = document.getElementById('pluginMenuItems');
   if (menuItems) {
     const lastLi = menuItems.querySelector('li:last-child a');

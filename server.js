@@ -229,6 +229,7 @@ function renderEditor(docName, text, prevName, nextName, pluginScriptsHtml = '')
 
   <script src="/view/edit/edit.js"></script>
   <script src="/view/edit/plugins.js"></script>
+  <script src="/vendor/commonmark.min.js"></script>
   ${pluginScriptsHtml}
   <script src="/vendor/htmx.min.js"></script>
 </body>
