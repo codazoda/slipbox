@@ -29,6 +29,7 @@
     --muted: #9a9a9a;
     --border: #c8c8c8;
     --hover: #d6d6d6;
+    --danger: #b00020;
     --menu-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -42,6 +43,7 @@
         --muted: #7f7f7f;
         --border: #333333;
         --hover: #2a2a2a;
+        --danger: #ff6b6b;
         --menu-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
     }
 }
@@ -155,6 +157,10 @@ hr {
     max-width: 50%; /* Hack */
     margin-right: 10px;
     color: var(--title-text);
+}
+
+#title #page.save-failed {
+    color: var(--danger);
 }
 
 #typebox,

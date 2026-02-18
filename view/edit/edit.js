@@ -4,6 +4,11 @@ const pageTitle = document.getElementById('page');
 
 moveSelection(typebox);
 
+function setSaveFailedState(failed) {
+  if (!pageTitle) return;
+  pageTitle.classList.toggle('save-failed', Boolean(failed));
+}
+
 function moveSelection(element) {
   if (!element) return;
   element.focus();
@@ -41,14 +46,40 @@ document.body.addEventListener('htmx:responseError', (event) => {
   const elt = event?.detail?.elt;
   if (elt !== typebox) return;
 
+  setSaveFailedState(true);
+
   const status = event?.detail?.xhr?.status;
   warnSaveFailed(`Save failed (HTTP ${status || 'error'}). Your latest edits may not be saved yet.`);
 });
 
+function isAbortedHtmxRequest(event) {
+  const xhr = event?.detail?.xhr;
+  if (!xhr) return false;
+
+  const statusText = String(xhr.statusText || '').toLowerCase();
+  if (statusText.includes('abort') || statusText.includes('cancel')) return true;
+
+  // Aborted browser requests commonly present as status 0.
+  return xhr.status === 0 && xhr.readyState === 0;
+}
+
 document.body.addEventListener('htmx:sendError', (event) => {
   const elt = event?.detail?.elt;
   if (elt !== typebox) return;
+
+  // Autosave uses htmx sync replacement, which can cancel older in-flight requests.
+  // Those cancellations are expected and should not show as network failures.
+  if (isAbortedHtmxRequest(event)) return;
+
+  setSaveFailedState(true);
   warnSaveFailed('Save failed (network error). Check your connection and try again.');
+});
+
+document.body.addEventListener('htmx:afterRequest', (event) => {
+  const elt = event?.detail?.elt;
+  if (elt !== typebox) return;
+  if (!event?.detail?.successful) return;
+  setSaveFailedState(false);
 });
 
 // Ignore manual save shortcuts; saving is automatic.
