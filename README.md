@@ -2,6 +2,8 @@
 
 Slipbox is a tiny, local-first writing space.
 
+![Slipbox Screenshot](slipbox.png)
+
 Why use it:
 - Your notes are plain `.md` files you own
 - No database to manage or migrate
