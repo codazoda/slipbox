@@ -164,13 +164,18 @@ hr {
 }
 
 #typebox,
-#previewbox {
+#previewbox,
+#printbox {
     font-size: 18px;
     line-height: 1.6;
 }
 
 #previewbox {
     max-width: none;
+}
+
+#printbox {
+    display: none;
 }
 
 .material-icons {
@@ -198,10 +203,81 @@ hr {
 
 /* printing */
 @media print {
-    #nav {
-        visibility: hidden;
+    html,
+    body {
+        height: auto !important;
+        overflow: visible !important;
     }
+
+    body {
+        margin: 0 !important;
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    #title,
+    #menu,
+    #nav,
     #page {
-        visibility: hidden;
+        display: none !important;
+    }
+
+    #typebox,
+    #previewbox,
+    #printbox {
+        width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        border: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+        color: #000 !important;
+        page-break-inside: auto;
+    }
+
+    /* Raw editor text should preserve manual line breaks. */
+    #typebox,
+    #printbox {
+        white-space: pre-wrap !important;
+        line-height: 1.4 !important;
+    }
+
+    /* Markdown preview uses HTML block spacing; normalize for print. */
+    #previewbox {
+        white-space: normal !important;
+        line-height: 1.4 !important;
+    }
+
+    #previewbox p,
+    #previewbox ul,
+    #previewbox ol,
+    #previewbox blockquote,
+    #previewbox pre {
+        margin: 0 0 0.6em 0 !important;
+    }
+
+    #previewbox li {
+        margin: 0 !important;
+    }
+
+    /* Browser quirk: textarea may print only first visible line. */
+    body[data-print-source="edit"] #typebox {
+        display: none !important;
+    }
+
+    body[data-print-source="edit"] #printbox {
+        display: block !important;
+    }
+
+    body[data-print-source="preview"] #printbox {
+        display: none !important;
+    }
+
+    /* Print only whichever editor pane is currently visible. */
+    #typebox[style*="display: none"],
+    #previewbox[style*="display: none"] {
+        display: none !important;
     }
 }

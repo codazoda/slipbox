@@ -2,6 +2,14 @@ const typebox = document.getElementById('typebox');
 const docInput = document.querySelector('input[name="doc"]');
 const pageTitle = document.getElementById('page');
 
+const printMirror = document.createElement('pre');
+printMirror.id = 'printbox';
+printMirror.setAttribute('aria-hidden', 'true');
+printMirror.style.display = 'none';
+if (typebox && typebox.parentNode) {
+  typebox.insertAdjacentElement('afterend', printMirror);
+}
+
 moveSelection(typebox);
 
 function setSaveFailedState(failed) {
@@ -24,6 +32,17 @@ function warnSaveFailed(message) {
   window.alert(text);
 }
 
+function syncPrintMirror() {
+  if (!typebox || !printMirror) return;
+  printMirror.textContent = typebox.value || '';
+}
+
+function isPreviewVisibleForPrint() {
+  const previewbox = document.getElementById('previewbox');
+  if (!previewbox) return false;
+  return window.getComputedStyle(previewbox).display !== 'none';
+}
+
 // Keep editor synced if a save causes a filename rename.
 document.body.addEventListener('documentRenamed', (event) => {
   const nextDoc = event?.detail?.doc;
@@ -33,6 +52,9 @@ document.body.addEventListener('documentRenamed', (event) => {
 
   // Show the updated filename at the top right after save.
   if (pageTitle) pageTitle.textContent = nextDoc;
+
+  // Keep browser tab title in sync with renamed document.
+  document.title = `${nextDoc} - Slipbox`;
 
   const slug = nextDoc.replace(/\.md$/i, '');
   const nextUrl = `/doc/${encodeURIComponent(slug)}`;
@@ -80,6 +102,20 @@ document.body.addEventListener('htmx:afterRequest', (event) => {
   if (elt !== typebox) return;
   if (!event?.detail?.successful) return;
   setSaveFailedState(false);
+});
+
+if (typebox) {
+  typebox.addEventListener('input', syncPrintMirror);
+  syncPrintMirror();
+}
+
+window.addEventListener('beforeprint', () => {
+  syncPrintMirror();
+  document.body.dataset.printSource = isPreviewVisibleForPrint() ? 'preview' : 'edit';
+});
+
+window.addEventListener('afterprint', () => {
+  delete document.body.dataset.printSource;
 });
 
 // Ignore manual save shortcuts; saving is automatic.
