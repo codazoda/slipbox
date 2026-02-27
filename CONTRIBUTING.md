@@ -2,17 +2,26 @@
 
 Thanks for your interest in contributing.
 
-## Please open an Issue first (not a Pull Request)
+## Keep it simple
 
-For this project, please **do not open a PR as the first step**.
-Instead, open a GitHub Issue describing:
+These are **guidelines**, not red tape.
 
-- the problem you are trying to solve,
-- the behavior you expect,
-- any constraints or tradeoffs,
-- and (if useful) examples or mockups.
+If you think you found an issue, please report it — no need to overthink it.
+A short issue is totally fine.
 
-This helps us shape clear specifications before implementation.
+## Preferred workflow: open an Issue first
+
+We prefer starting with a GitHub Issue before opening a PR, because it helps us align on what should be built.
+
+Helpful details (when you have them):
+
+- what happened,
+- what you expected,
+- steps to reproduce,
+- screenshots/examples,
+- and any constraints.
+
+But again: if all you have is “this seems broken,” that’s still useful.
 
 ## Why this workflow exists
 
@@ -22,21 +31,8 @@ Slipbox is also an experiment in **agentic coding**.
 - Code in this repository is written by AI based on user specifications.
 - GitHub Issues are a primary input channel for those specifications.
 
-In short: ideas and requirements come from users, and AI generates implementation from that spec.
-
-## What to include in a good Issue
-
-A strong Issue usually includes:
-
-- context (what you are trying to do),
-- current behavior,
-- desired behavior,
-- acceptance criteria,
-- edge cases,
-- and any non-goals.
-
-The clearer the Issue, the better the implementation quality.
+In short: users provide needs and specs, and AI generates implementations from those specs.
 
 ## Security and sensitive changes
 
-If your request touches authentication, permissions, data handling, or anything security-sensitive, call that out explicitly in the Issue.
+If your report touches authentication, permissions, data handling, or anything security-sensitive, please mention that in the Issue.
